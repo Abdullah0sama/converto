@@ -1,0 +1,10 @@
+i{
+    font-size: 50px;
+}
+.select div{
+    width: 33%;
+}
+label{
+    font-size: 1.25rem;
+    font-weight: bold;
+}
