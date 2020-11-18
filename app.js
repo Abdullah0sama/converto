@@ -134,8 +134,11 @@ var spotify = {
     }
 }
 
-
+app.get("/deezer", function(req, res){
+    console.log(req);
+})
 app.get("/", function(req, res){
+    console.log(req);
     if(req.query.link){
         var albumId = spotify.getId(req.query.link);
         var tracks = spotify.getTracks(albumId);
@@ -157,6 +160,6 @@ app.get("/", function(req, res){
 
 
     
-app.listen(process.env.PORT | 3000, function () {  
+app.listen(process.env.PORT, function () {  
     console.log("CovertO Server has started!");
 });
