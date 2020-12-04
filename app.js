@@ -136,6 +136,7 @@ var spotify = {
 
 app.get("/deezer", function(req, res){
     console.log(req);
+    res.redirect("/conveto");
 })
 app.get("/", function(req, res){
     console.log(req);
