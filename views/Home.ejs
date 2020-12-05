@@ -1,62 +1,76 @@
 <%- include("partials/header")  %>
-<div class="container">
+<div class="container" id="cont">
     <h1 class="text-center my-5">Welcome to CovertO</h1>
-    <div class="row">
-        <div class="left col-6">
-            <h2 class="text-center my-3">Album IN</h2>
-            <form action="/" method="GET">
-                <div class="d-flex justify-content-between align-items-center select">
+    <form action="/" method="POST" class="w-100">
+    <div class="row justify-content-center">
+                
+                <div class="left col-6">
+
                     <div class="form-group">
                         <label>From</label>
-                        <select name="streamingServiceInput" class="form-control">
-                            <option value="spotify">Spotify</option>
-                            <option value="youtube">Youtube</option>
+                        <select name="input" class="form-control" id="input" >
+                            <option value="spotify" >Spotify</option>
+                            <option value="deezer"  >Deezer</option>
+                            <option value="undefined">Not avaliable</option>
                         </select>
                     </div>
-                    <i class="fas fa-arrow-right"></i>
+
+                    <div class="form-group">
+                        <input type="text" name="link" placeholder="Playlist Link" class="form-control" id="playlistLink">
+                    </div>
+
+                </div>
+
+
+                <div class="right col-6">
+
                     <div class="form-group">
                         <label>To</label>
-                        <select name="streamingServiceOutput" class="form-control">
-                            <option>Spotify</option>
+                        <select name="output" class="form-control" id="output">
+                            <option value="spotify">Spotify</option>
+                            <option value="deezer">Deezer</option>
                         </select>
                     </div>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="link" placeholder="Playlist Link" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-success btn-block">
-                </div>
-            </form>
-            <h3 class="text-center"><%= playlist.name %></h3> 
-            <div class="tracks">
 
-                <% playlist.tracks.forEach(track => { %>
-                    <div class="card bg-success my-4">
-                        <div class="card-header">
-                            <h4><%=track.name %></h4>
-                        </div>
-                        <ul class="list-group list-group-flush">
-    
-                        </ul>
-                        <li class="list-group-item">
-                            <% track.artists.forEach(artist => { %>
-                                <%=artist%>, 
-                            <% }) %>
-                        </li>
+                </div>
+                <div class="col-12">
+
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-block" value="Submit" id="submit">
                     </div>
-                <% }) %>
-            </div>
+
+                </div>
+                
         </div>
-        <div class="right col-6">
-            <h2 class="text-center my-3">Album OUT</h2>
-            <div class="d-flex justify-content-center flex-column text-center">
-                <% if(link){ %>
-                <p><a href="<%= link %>" class="btn btn-success btn-lg mx-a" target="_blanck">Go To Created Playlist</a></p>
-                <%}%>
+        </form>
+
+            <div class="row justify-content-center my-5">
+                <div class="col-6 text-center">
+        
+                        <% if(locals.link){ %>
+
+                            <h1 class="my-3">Your playlist is done</h1>
+                            <p class="lead">You have a great taste</p>
+                            <p><a href="<%= link %>" class="text-warning display-5" target="_blanck"><%= link %></a></p>
+
+                        <%}%>
+        
+                </div>
             </div>
-        </div>
-    </div>
+
 </div> 
+<script>
+    document.querySelector("#playlistLink").addEventListener("input", changeSelect);
+    function changeSelect(e){
+        var valueOfSelectInput;
+        console.log(e.target.value);
+        var link = e.target.value.toLowerCase();
+        if(link.includes("spotify")) valueOfSelectInput = "spotify";
+        else if(link.includes("deezer")) valueOfSelectInput = "deezer";
+        else valueOfSelectInput = undefined;
+
+        document.querySelector("#input").value = valueOfSelectInput;
+    }
+</script>
 
 <%- include("partials/footer")  %> 
