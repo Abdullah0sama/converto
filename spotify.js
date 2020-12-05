@@ -1,12 +1,13 @@
 const axios = require("axios").default;
 
-var clientId = process.env.clientId;
-var clientSecret = process.env.clientSecret;
-var redirect_uri = process.env.redirect_uri;
-var refreshToken = process.env.refreshToken;
-var scopes = "playlist-modify-public";
+var clientId =          process.env.spotify_clientId;
+var clientSecret =      process.env.spotify_clientSecret;
+var redirect_uri =      process.env.spotify_redirect_uri;
+var refreshToken =      process.env.spotify_refreshToken;
+var scopes =            process.env.spotify_scopes;
+var me =                process.env.spotify_me;
+
 var token = Buffer.from(`${clientId}:${clientSecret}`, 'utf8').toString('base64');
-var me = "nmvkw4arerrl6x1errmycjkoq";
 var accessToken;
 
 var Spotify = {};
