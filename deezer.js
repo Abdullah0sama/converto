@@ -1,13 +1,13 @@
 const axios = require("axios").default;
 
-var app_id = "446382";
-var secret_key  = "3754f3eddd7087eeeccdbdc645600b20"
-var redirect_uri = "https://convert-o.herokuapp.com/deezer";
-var perms = "offline_access,manage_library";
-var code = "frbe30bf568f62ae0b882125e711f315";
-var access_token = "frVytosemR1yRA5JFGZiwe8cjp7pjsPWUeZrAfPwAB0SDF76ba";
+var app_id =                process.env.deezer_app_id;
+var secret_key  =           process.env.deezer_secret_key;
+var redirect_uri =          process.env.deezer_redirect_uri;
+var perms =                 process.env.deezer_perms;
+var code =                  process.env.deezer_code;
+var access_token =          process.env.deezer_access_token;
+var me =                    process.env.deezer_me;
 
-var me = "3882746022";
 var Deezer = {};
 
 // axios.get(`https://connect.deezer.com/oauth/auth.php?app_id=${app_id}&redirect_uri=${encodeURIComponent(redirect_uri)}&perms=${perms}`)
