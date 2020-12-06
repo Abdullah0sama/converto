@@ -2,75 +2,78 @@
 <div class="container" id="cont">
     <h1 class="text-center my-5">Welcome to CovertO</h1>
     <form action="/" method="POST" class="w-100">
-    <div class="row justify-content-center">
+        <div class="row justify-content-center">
+            
+            <div class="left col-6">
                 
-                <div class="left col-6">
-
-                    <div class="form-group">
-                        <label>From</label>
-                        <select name="input" class="form-control" id="input" >
-                            <option value="spotify" >Spotify</option>
-                            <option value="deezer"  >Deezer</option>
-                            <option value="undefined">Not avaliable</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="text" name="link" placeholder="Playlist Link" class="form-control" id="playlistLink">
-                    </div>
-
-                </div>
-
-
-                <div class="right col-6">
-
-                    <div class="form-group">
-                        <label>To</label>
-                        <select name="output" class="form-control" id="output">
-                            <option value="spotify">Spotify</option>
-                            <option value="deezer">Deezer</option>
-                        </select>
-                    </div>
-
-                </div>
-                <div class="col-12">
-
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-block" value="Submit" id="submit">
-                    </div>
-
+                <div class="form-group">
+                    <label>From</label>
+                    <select name="input" class="form-control" id="input" >
+                        <option value="spotify" >Spotify</option>
+                        <option value="deezer"  >Deezer</option>
+                        <option value="undefined">Not avaliable</option>
+                    </select>
                 </div>
                 
-        </div>
-        </form>
-
-            <div class="row justify-content-center my-5">
-                <div class="col-6 text-center">
-        
-                        <% if(locals.link){ %>
-
-                            <h1 class="my-3">Your playlist is done</h1>
-                            <p class="lead">You have a great taste</p>
-                            <p><a href="<%= link %>" class="text-warning display-5" target="_blanck"><%= link %></a></p>
-
-                        <%}%>
-        
+                <div class="form-group">
+                    <input type="text" name="link" placeholder="Playlist Link" class="form-control" id="playlistLink">
                 </div>
+                
             </div>
-
-</div> 
-<script>
-    document.querySelector("#playlistLink").addEventListener("input", changeSelect);
-    function changeSelect(e){
-        var valueOfSelectInput;
-        console.log(e.target.value);
-        var link = e.target.value.toLowerCase();
-        if(link.includes("spotify")) valueOfSelectInput = "spotify";
-        else if(link.includes("deezer")) valueOfSelectInput = "deezer";
-        else valueOfSelectInput = undefined;
-
-        document.querySelector("#input").value = valueOfSelectInput;
-    }
-</script>
+            
+            
+            <div class="right col-6">
+                
+                <div class="form-group">
+                    <label>To</label>
+                    <select name="output" class="form-control" id="output">
+                        <option value="spotify">Spotify</option>
+                        <option value="deezer">Deezer</option>
+                    </select>
+                </div>
+                
+            </div>
+            <div class="col-12">
+                
+                <div class="form-group">
+                    <input type="submit" class="btn btn-block" value="Submit" id="submit">
+                </div>
+                
+            </div>
+            
+        </div>
+    </form>
+    
+    <div class="row justify-content-center my-5">
+        <div class="col-6 text-center">
+            
+            <% if(locals.link){ %>
+                
+                <h1 class="my-3">Your playlist is done</h1>
+                <p class="lead">You have a great taste</p>
+                <p><a href="<%= link %>" class="text-warning display-5" target="_blanck"><%= link %></a></p>
+                
+                <%}%>
+                
+            </div>
+        </div>
+        
+        <p id="me">
+            By: <a href="https://github.com/Abdullah0sama" target="_blanck">AO</a>
+        </p>
+    </div> 
+    <script>
+        document.querySelector("#playlistLink").addEventListener("input", changeSelect);
+        function changeSelect(e){
+            var valueOfSelectInput;
+            console.log(e.target.value);
+            var link = e.target.value.toLowerCase();
+            if(link.includes("spotify")) valueOfSelectInput = "spotify";
+            else if(link.includes("deezer")) valueOfSelectInput = "deezer";
+            else valueOfSelectInput = undefined;
+            
+            document.querySelector("#input").value = valueOfSelectInput;
+        }
+    </script>
 
 <%- include("partials/footer")  %> 
