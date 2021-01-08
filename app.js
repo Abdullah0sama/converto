@@ -40,9 +40,9 @@ app.get("/", async function(req, res){
 });
 
 app.post("/", function(req, res){
-    var inPlaylist = req.body.input;
     var outPlaylist = req.body.output;
     var inLink = req.body.link;
+    var inPlaylist = inLink.includes("spotify") ? "spotify" : inLink.includes("deezer") ? "deezer" : undefined;
     
     if(inLink &&  inLink.includes(inPlaylist)){
 
@@ -59,6 +59,6 @@ app.post("/", function(req, res){
 
     
 app.listen(process.env.PORT, function () {  
-    console.log("CovertO Server has started!");
+    console.log("replicalist Server has started!");
 });
 

@@ -1,28 +1,27 @@
 <%- include("partials/header")  %>
 <div class="container" id="cont">
-    <h1 class="text-center my-5">Welcome to CovertO</h1>
+    <h1 class="text-center my-5">Welcome to <b>replicalist</b></h1>
     <form action="/" method="POST" class="w-100">
         <div class="row justify-content-center">
-            
-            <div class="left col-6">
-                
-                <div class="form-group">
-                    <label>From</label>
-                    <select name="input" class="form-control" id="input" >
-                        <option value="spotify" >Spotify</option>
-                        <option value="deezer"  >Deezer</option>
-                        <option value="undefined">Not avaliable</option>
-                    </select>
-                </div>
-                
+            <div class="col-12">
+                <p><b>replicalist</b> is a website to help you replicate a playlist on another streaming service. It can be used if you want 
+                    to send a playlist to someone who doesn't use the same streaming service as you or you were sent one or even 
+                    if you are migrating from your current streaming service and you don't want to leave your playlists behind.</p>
+                    <p>Currently the website supports replicating from and to:</p>
+                    <ul>
+                        <li>Spotify</li>
+                        <li>Deezer</li>
+                    </ul>
+            </div>
+            <div class="col-12 py-3" >
+                <p id="from"></p>
                 <div class="form-group">
                     <input type="text" name="link" placeholder="Playlist Link" class="form-control" id="playlistLink">
                 </div>
-                
             </div>
             
             
-            <div class="right col-6">
+            <div class="col-12">
                 
                 <div class="form-group">
                     <label>To</label>
@@ -50,7 +49,7 @@
             <% if(locals.link){ %>
                 
                 <h1 class="my-3">Your playlist is done</h1>
-                <p class="lead">You have a great taste</p>
+                <p class="lead">That's quite a taste you got there</p>
                 <p><a href="<%= link %>" class="text-warning display-5" target="_blanck"><%= link %></a></p>
                 
                 <%}%>
@@ -59,20 +58,21 @@
         </div>
         
         <p id="me">
-            By: <a href="https://github.com/Abdullah0sama" target="_blanck">AO</a>
+            <a href="https://github.com/Abdullah0sama" target="_blanck"><b>AO</b></a>
         </p>
     </div> 
+
     <script>
         document.querySelector("#playlistLink").addEventListener("input", changeSelect);
         function changeSelect(e){
             var valueOfSelectInput;
-            console.log(e.target.value);
             var link = e.target.value.toLowerCase();
-            if(link.includes("spotify")) valueOfSelectInput = "spotify";
-            else if(link.includes("deezer")) valueOfSelectInput = "deezer";
-            else valueOfSelectInput = undefined;
-            
-            document.querySelector("#input").value = valueOfSelectInput;
+            if(link.includes("spotify")) valueOfSelectInput = "Spotify", color="#1DB954";
+            else if(link.includes("deezer")) valueOfSelectInput = "Deezer", color="#FFF";
+            else valueOfSelectInput = "Unsupported", color = "#ffcc00", document.getElementById("submit").setAttribute("disabled", true);
+            let ele = document.querySelector("#from");
+            ele.textContent = valueOfSelectInput;
+            ele.style.color = color; 
         }
     </script>
 
