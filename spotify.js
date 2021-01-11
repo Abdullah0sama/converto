@@ -68,15 +68,10 @@ Spotify.getPlaylist = async function (id){
     return playlistInfo;
 }
 
-//creates a playlist using playlistInfo
-//return created playlist id
-
-Spotify.createPlaylist = async function(playlistInfo){
-    await refreshAccessToken();
-
-    //creating playlist and returning playlist id
-    var playlistId = await axios.post(`https://api.spotify.com/v1/users/${me}/playlists`, {
-        name: playlistInfo.title
+//creating playlist and returning playlist id
+function initPlaylist(title){
+    return axios.post(`https://api.spotify.com/v1/users/${me}/playlists`, {
+        name: title
     }, {
         headers: {
             'Authorization': `Bearer ${accessToken}`,
@@ -85,11 +80,11 @@ Spotify.createPlaylist = async function(playlistInfo){
     })
     .then(res => res.data.id)
     .catch(err => console.log("error id"));
+}
 
-    var tracks = playlistInfo.tracksInfo;
-
-    //search for the tracks and return an array with ids for the found tracks
-    var tracksId = await Promise.all(tracks.map( (track) => {
+//search for the tracks and return an array with ids for the found tracks
+function search(tracks){
+    return  Promise.all(tracks.map( (track) => {
         return axios.get(`https://api.spotify.com/v1/search`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
@@ -109,14 +104,10 @@ Spotify.createPlaylist = async function(playlistInfo){
         .catch(err => console.log(err));
     }))
     .then(res => res);
-
-    //remove undefined from the array
-    tracksId = tracksId.filter(function(x) {
-        return x !== undefined;
-    });
-
-    //adds tracks to the playlist using an array of their ids
-    await axios.post(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+}
+//adds tracks to the playlist using an array of their ids
+function addTracks(playlistId, tracksId){
+    return axios.post(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
         uris: tracksId
     }, {
         headers: {
@@ -126,7 +117,23 @@ Spotify.createPlaylist = async function(playlistInfo){
     })
     .then(res => console.log(res.statusText))
     .catch(err => console.log(err));
+}
 
+//creates a playlist using playlistInfo and returns created playlist id
+Spotify.createPlaylist = async function(playlistInfo){
+    await refreshAccessToken();
+    
+    var playlistId = await initPlaylist(playlistInfo.title);
+    
+    var tracksId = await search(playlistInfo.tracksInfo);
+    
+    //remove undefined from the array
+    tracksId = tracksId.filter(function(x) {
+        return x !== undefined;
+    });
+    
+    await addTracks(playlistId, tracksId);
+    
     return playlistId;
 }
 

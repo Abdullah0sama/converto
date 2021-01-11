@@ -47,26 +47,32 @@ Deezer.getPlaylist = async function (id){
             });
         });
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err, "HERE"));
     return playlistInfo;
-}
+};
 
-Deezer.createPlaylist = async function (playlistInfo){
-
-    //creating the playlist and returning back the id
-    var playlistId = await axios.post(`https://api.deezer.com/user/${me}/playlists`, {}, {
+//creating the playlist and returning back the id
+function initPlaylist(title){
+    return axios.post(`https://api.deezer.com/user/${me}/playlists`, {}, {
         params: {
             access_token: access_token,
-            title: playlistInfo.title
+            title: title
         }
     })
-    .then(res => res.data.id)
-    .catch(err => console.log(err));
+}
 
-    //search for the tracks in deezer and returns an array with their ids
-    var tracks = playlistInfo.tracksInfo;
-    var tracksId = [];
-    await Promise.all(tracks.map( (track) => {
+//add tracks to the playlist using track ids
+function addTracks(playlistId, tracksId){
+    return axios.post(`https://api.deezer.com/playlist/${playlistId}/tracks`, {}, {
+        params: {
+            access_token: access_token,
+            songs: tracksId.join(",")
+        }
+    })
+}
+//search for the tracks in deezer and returns an array with their ids
+function search(tracksInfo){
+    return Promise.all(tracksInfo.map( (track) => {
         return axios.get(`https://api.deezer.com/search`, {
             params: {
                 access_token: access_token,
@@ -82,20 +88,23 @@ Deezer.createPlaylist = async function (playlistInfo){
         })
         .catch(err => console.log(err));
     }))
-    .then(res => tracksId = res);
+    .then(res => res);
+}
+Deezer.createPlaylist = async function (playlistInfo){
 
-    //add tracks to the playlist using track ids
-    await axios.post(`https://api.deezer.com/playlist/${playlistId}/tracks`, {}, {
-        params: {
-            access_token: access_token,
-            songs: tracksId.join(",")
-        }
-    })
-    .then(res => console.log(res.data))
+    var playlistId = await initPlaylist(playlistInfo.title)
+    .then(res => res.data.id)
     .catch(err => console.log(err));
 
+    var tracksId = await search(playlistInfo.tracksInfo);
+
+    await addTracks(playlistId, tracksId)
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err));
+    
     return playlistId;
 }
+
 
 module.exports = Deezer;
 
