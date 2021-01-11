@@ -67,10 +67,16 @@
         function changeSelect(e){
             var valueOfSelectInput;
             var link = e.target.value.toLowerCase();
-            if(link.includes("spotify")) valueOfSelectInput = "Spotify", color="#1DB954";
-            else if(link.includes("deezer")) valueOfSelectInput = "Deezer", color="#FFF";
-            else valueOfSelectInput = "Unsupported", color = "#ffcc00", document.getElementById("submit").setAttribute("disabled", true);
+            var submitStatue = true;
+            if(link.includes("spotify")) valueOfSelectInput = "Spotify", color="#1DB954", submitStatue = true;
+            else if(link.includes("deezer")) valueOfSelectInput = "Deezer", color="#FFF", submitStatue = true;
+            else valueOfSelectInput = "Unsupported", color = "#ffcc00", submitStatue = false;
+            
+            if(submitStatue) document.getElementById("submit").removeAttribute("disabled");
+            else document.getElementById("submit").setAttribute("disabled", "disabled");
+            
             let ele = document.querySelector("#from");
+
             ele.textContent = valueOfSelectInput;
             ele.style.color = color; 
         }
